@@ -4,6 +4,7 @@ import { pipe } from 'fp-ts/function';
 import * as F from 'fp-ts/Functor';
 import * as S from 'fp-ts/Semiring';
 import * as P from 'fp-ts/Pointed';
+import * as A from 'fp-ts/Apply';
 
 // --------------------------------------------------------------------------------------------------------------------
 // Model
@@ -97,10 +98,44 @@ export const map = <T1, T2>(f: (x: T1) => T2) => (point: Point2d<T1>): Point2d<T
 export const of = <T>(t: T): Point2d<T> => xy(t, t);
 
 // --------------------------------------------------------------------------------------------------------------------
+// Apply
+// --------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @since 0.1.0
+ * @category Apply
+ * @example
+ *   import { pipe } from 'fp-ts/function';
+ *   import { toRecord, ap, xy } from '@no-day/fp-ts-geometry/Point2d';
+ *
+ *   assert.deepStrictEqual(
+ *     pipe(
+ *       xy(
+ *         (x: number) => (-x).toString(),
+ *         (y: number) => y.toString()
+ *       ),
+ *       ap(xy(3, 8)),
+ *       toRecord
+ *     ),
+ *     { x: '-3', y: '8' }
+ *   );
+ */
+export const ap = <T1>(point: Point2d<T1>) => <T2>(f: Point2d<(x: T1) => T2>): Point2d<T2> =>
+  pipe(
+    point,
+    overInternal(({ x, y }) => {
+      const fs = toInternal(f);
+      return { x: fs.x(x), y: fs.y(y) };
+    })
+  );
+
+// --------------------------------------------------------------------------------------------------------------------
 // Non-pipeables
 // --------------------------------------------------------------------------------------------------------------------
 
 const map_: F.Functor1<URI>['map'] = (fa, f) => pipe(fa, map(f));
+
+const ap_: A.Apply1<URI>['ap'] = (fa, f) => pipe(fa, ap(f));
 
 // --------------------------------------------------------------------------------------------------------------------
 // Instances
@@ -135,6 +170,12 @@ export const Functor: F.Functor1<URI> = { URI: URI, map: map_ };
  * @category Instances
  */
 export const Pointed: P.Pointed<URI> = { URI: URI, of };
+
+/**
+ * @since 0.1.0
+ * @category Instances
+ */
+export const Apply: A.Apply1<URI> = { ...Functor, ap: ap_ };
 // --------------------------------------------------------------------------------------------------------------------
 // Destructors
 // --------------------------------------------------------------------------------------------------------------------
