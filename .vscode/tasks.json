@@ -14,6 +14,10 @@
         "echo": false,
         "focus": false,
         "panel": "dedicated"
+      },
+      "problemMatcher": {
+        "base": "$tsc-watch",
+        "applyTo": "allDocuments"
       }
     },
     {

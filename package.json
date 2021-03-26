@@ -23,8 +23,8 @@
   "scripts": {
     "test": "yarn jest",
     "test:watch": "yarn jest --watch",
-    "build": "yarn tsc",
-    "build:watch": "yarn tsc --watch",
+    "build": "yarn tsc --build tsconfig.build.json",
+    "build:watch": "yarn tsc --build tsconfig.json --watch",
     "prepublish": "yarn build",
     "docs": "yarn docs-ts",
     "docs:watch": "while inotifywait -e close_write src; do yarn docs; done",
