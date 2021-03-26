@@ -1,6 +1,6 @@
 {
   "name": "@no-day/fp-ts-geometry",
-  "homepage": "https://github.com/no-day/fp-ts-library-template",
+  "homepage": "https://github.com/no-day/fp-ts-geometry",
   "version": "1.0.0-rc.1",
   "main": "dist/index.js",
   "license": "MIT",

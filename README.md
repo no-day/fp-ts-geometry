@@ -2,4 +2,4 @@
 
 coming soon...
 
-[API Docs](https://no-day.github.io/fp-ts-geometry)
+[API Docs](https://no-day.github.io/fp-ts-geometry/)
