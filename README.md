@@ -14,4 +14,6 @@ The structure of the modules and many API names are taken from this library.
 
 One of the features of elm-geometry is that tracks units and coordinate system information at the type level. We find this very powerful, but decided to go another way in this library.
 
-All data structures have type parameter for their inner coordinate values. That means this library does not know anything about this types. In other words: Unlike elm-geometry the implementation is not number/float specific. Instead all operations require to pass a (semi)ring or field instance that powers the internals computations.
+All data structures have type parameters for their inner coordinate values. That means this library does not know anything about this types. In other words: Unlike elm-geometry the implementation is not number/float specific. Instead all operations require to pass a (semi)ring or field instance that powers the internal computations.
+
+With this abstraction we can provide useful instances like Functors or Applicatives to the data types. And we can archive the same restrictions based on units and/or coordinate systems.
