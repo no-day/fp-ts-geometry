@@ -21,10 +21,13 @@ Added in v0.1.0
   - [map](#map)
 - [Instances](#instances)
   - [Functor](#functor-1)
+  - [Pointed](#pointed)
   - [URI](#uri)
   - [URI (type alias)](#uri-type-alias)
 - [Model](#model)
   - [Point2d (type alias)](#point2d-type-alias)
+- [Pointed](#pointed-1)
+  - [of](#of)
 
 ---
 
@@ -37,7 +40,7 @@ The origin in a two dimensional space
 **Signature**
 
 ```ts
-export declare const origin: <T>(S: Semiring<T>) => Point2d<T>
+export declare const origin: <T>(S: S.Semiring<T>) => Point2d<T>
 ```
 
 **Example**
@@ -99,7 +102,7 @@ Added in v0.1.0
 
 ## map
 
-Creates a two dimensional point from x and y coordinates
+Maps over a Point2d's inner type
 
 **Signature**
 
@@ -116,7 +119,8 @@ import { toRecord, xy, map } from '@no-day/fp-ts-geometry/Point2d'
 assert.deepStrictEqual(
   pipe(
     xy(3, 8),
-    map((_) => _.toString())
+    map((_) => _.toString()),
+    toRecord
   ),
   { x: '3', y: '8' }
 )
@@ -131,7 +135,17 @@ Added in v0.1.0
 **Signature**
 
 ```ts
-export declare const Functor: Functor1<'Point2d'>
+export declare const Functor: F.Functor1<'Point2d'>
+```
+
+Added in v0.1.0
+
+## Pointed
+
+**Signature**
+
+```ts
+export declare const Pointed: P.Pointed<'Point2d'>
 ```
 
 Added in v0.1.0
@@ -165,7 +179,7 @@ Describes a point in a two dimensional space
 **Signature**
 
 ```ts
-export type Point2d<T> = { readonly Point2d: unique symbol }
+export type Point2d<T> = { readonly Point2d: unique symbol; _URI: URI; _A: T }
 ```
 
 **Example**
@@ -175,6 +189,27 @@ import { Point2d } from '@no-day/fp-ts-geometry/Point2d'
 
 type Point2dNumber = Point2d<number>
 type Point2dBoolean = Point2d<boolean>
+```
+
+Added in v0.1.0
+
+# Pointed
+
+## of
+
+**Signature**
+
+```ts
+export declare const of: <T>(t: T) => Point2d<T>
+```
+
+**Example**
+
+```ts
+import { pipe } from 'fp-ts/function'
+import { toRecord, of } from '@no-day/fp-ts-geometry/Point2d'
+
+assert.deepStrictEqual(pipe(of('hello'), toRecord), { x: 'hello', y: 'hello' })
 ```
 
 Added in v0.1.0
