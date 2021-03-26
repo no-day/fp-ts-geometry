@@ -69,7 +69,8 @@ export const xy = <T>(x: T, y: T): Point2d<T> => fromInternal({ x, y });
  *   assert.deepStrictEqual(
  *     pipe(
  *       xy(3, 8),
- *       map((_) => _.toString())
+ *       map((_) => _.toString()),
+ *       toRecord
  *     ),
  *     { x: '3', y: '8' }
  *   );
