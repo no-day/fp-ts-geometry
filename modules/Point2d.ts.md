@@ -12,6 +12,8 @@ Added in v0.1.0
 
 <h2 class="text-delta">Table of contents</h2>
 
+- [Apply](#apply)
+  - [ap](#ap)
 - [Constructors](#constructors)
   - [origin](#origin)
   - [xy](#xy)
@@ -20,6 +22,7 @@ Added in v0.1.0
 - [Functor](#functor)
   - [map](#map)
 - [Instances](#instances)
+  - [Apply](#apply-1)
   - [Functor](#functor-1)
   - [Pointed](#pointed)
   - [URI](#uri)
@@ -30,6 +33,37 @@ Added in v0.1.0
   - [of](#of)
 
 ---
+
+# Apply
+
+## ap
+
+**Signature**
+
+```ts
+export declare const ap: <T1>(point: Point2d<T1>) => <T2>(f: Point2d<(x: T1) => T2>) => Point2d<T2>
+```
+
+**Example**
+
+```ts
+import { pipe } from 'fp-ts/function'
+import { toRecord, ap, xy } from '@no-day/fp-ts-geometry/Point2d'
+
+assert.deepStrictEqual(
+  pipe(
+    xy(
+      (x: number) => (-x).toString(),
+      (y: number) => y.toString()
+    ),
+    ap(xy(3, 8)),
+    toRecord
+  ),
+  { x: '-3', y: '8' }
+)
+```
+
+Added in v0.1.0
 
 # Constructors
 
@@ -129,6 +163,16 @@ assert.deepStrictEqual(
 Added in v0.1.0
 
 # Instances
+
+## Apply
+
+**Signature**
+
+```ts
+export declare const Apply: A.Apply1<'Point2d'>
+```
+
+Added in v0.1.0
 
 ## Functor
 
