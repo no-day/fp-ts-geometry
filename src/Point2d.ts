@@ -1,9 +1,9 @@
 /** @since 0.1.0 */
 
-import { Field } from 'fp-ts/lib/Field';
 import { pipe } from 'fp-ts/function';
-import { Functor1 } from 'fp-ts/Functor';
-import { Semiring } from 'fp-ts/Semiring';
+import * as F from 'fp-ts/Functor';
+import * as S from 'fp-ts/Semiring';
+import * as P from 'fp-ts/Pointed';
 
 // --------------------------------------------------------------------------------------------------------------------
 // Model
@@ -20,7 +20,7 @@ import { Semiring } from 'fp-ts/Semiring';
  *   type Point2dNumber = Point2d<number>;
  *   type Point2dBoolean = Point2d<boolean>;
  */
-export type Point2d<T> = { readonly Point2d: unique symbol };
+export type Point2d<T> = { readonly Point2d: unique symbol; _URI: URI; _A: T };
 
 // --------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -38,7 +38,7 @@ export type Point2d<T> = { readonly Point2d: unique symbol };
  *
  *   assert.deepStrictEqual(pipe(origin(n), toRecord), { x: 0, y: 0 });
  */
-export const origin = <T>(S: Semiring<T>): Point2d<T> => fromInternal({ x: S.zero, y: S.zero });
+export const origin = <T>(S: S.Semiring<T>): Point2d<T> => fromInternal({ x: S.zero, y: S.zero });
 
 /**
  * Creates a two dimensional point from x and y coordinates
@@ -100,7 +100,7 @@ export const of = <T>(t: T): Point2d<T> => xy(t, t);
 // Non-pipeables
 // --------------------------------------------------------------------------------------------------------------------
 
-const map_: Functor1<URI>['map'] = (fa, f) => pipe(fa, map(f));
+const map_: F.Functor1<URI>['map'] = (fa, f) => pipe(fa, map(f));
 
 // --------------------------------------------------------------------------------------------------------------------
 // Instances
@@ -128,8 +128,13 @@ declare module 'fp-ts/HKT' {
  * @since 0.1.0
  * @category Instances
  */
-export const Functor: Functor1<URI> = { URI: URI, map: map_ };
+export const Functor: F.Functor1<URI> = { URI: URI, map: map_ };
 
+/**
+ * @since 0.1.0
+ * @category Instances
+ */
+export const Pointed: P.Pointed<URI> = { URI: URI, of };
 // --------------------------------------------------------------------------------------------------------------------
 // Destructors
 // --------------------------------------------------------------------------------------------------------------------
