@@ -58,7 +58,7 @@ export const xy = <T>(x: T, y: T): Point2d<T> => fromInternal({ x, y });
 // --------------------------------------------------------------------------------------------------------------------
 
 /**
- * Creates a two dimensional point from x and y coordinates
+ * Maps over a Point2d's inner type
  *
  * @since 0.1.0
  * @category Functor
