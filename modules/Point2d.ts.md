@@ -6,7 +6,7 @@ parent: Modules
 
 ## Point2d overview
 
-Added in v1.0.0
+Added in v0.1.0
 
 ---
 
@@ -17,6 +17,12 @@ Added in v1.0.0
   - [xy](#xy)
 - [Destructors](#destructors)
   - [toRecord](#torecord)
+- [Functor](#functor)
+  - [map](#map)
+- [Instances](#instances)
+  - [Functor](#functor-1)
+  - [URI](#uri)
+  - [URI (type alias)](#uri-type-alias)
 - [Model](#model)
   - [Point2d (type alias)](#point2d-type-alias)
 
@@ -44,7 +50,7 @@ import { Field as n } from '@no-day/fp-ts-geometry/number'
 assert.deepStrictEqual(pipe(origin(n), toRecord), { x: 0, y: 0 })
 ```
 
-Added in v1.0.0
+Added in v0.1.0
 
 ## xy
 
@@ -65,7 +71,7 @@ import { toRecord, xy } from '@no-day/fp-ts-geometry/Point2d'
 assert.deepStrictEqual(pipe(xy(3, 8), toRecord), { x: 3, y: 8 })
 ```
 
-Added in v1.0.0
+Added in v0.1.0
 
 # Destructors
 
@@ -87,7 +93,68 @@ import { Field as n } from '@no-day/fp-ts-geometry/number'
 assert.deepStrictEqual(pipe(origin(n), toRecord), { x: 0, y: 0 })
 ```
 
-Added in v1.0.0
+Added in v0.1.0
+
+# Functor
+
+## map
+
+Creates a two dimensional point from x and y coordinates
+
+**Signature**
+
+```ts
+export declare const map: <T1, T2>(f: (x: T1) => T2) => (point: Point2d<T1>) => Point2d<T2>
+```
+
+**Example**
+
+```ts
+import { pipe } from 'fp-ts/function'
+import { toRecord, xy, map } from '@no-day/fp-ts-geometry/Point2d'
+
+assert.deepStrictEqual(
+  pipe(
+    xy(3, 8),
+    map((_) => _.toString())
+  ),
+  { x: '3', y: '8' }
+)
+```
+
+Added in v0.1.0
+
+# Instances
+
+## Functor
+
+**Signature**
+
+```ts
+export declare const Functor: Functor1<'Point2d'>
+```
+
+Added in v0.1.0
+
+## URI
+
+**Signature**
+
+```ts
+export declare const URI: 'Point2d'
+```
+
+Added in v0.1.0
+
+## URI (type alias)
+
+**Signature**
+
+```ts
+export type URI = typeof URI
+```
+
+Added in v0.1.0
 
 # Model
 
@@ -110,4 +177,4 @@ type Point2dNumber = Point2d<number>
 type Point2dBoolean = Point2d<boolean>
 ```
 
-Added in v1.0.0
+Added in v0.1.0
